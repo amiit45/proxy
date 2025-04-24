@@ -51,7 +51,9 @@ class AppState extends ChangeNotifier {
 
   Future<void> fetchNearbyUsers() async {
     try {
+      print('Fetching nearby users...');
       final users = await _apiService.getNearbyUsers(_token);
+      print('Nearby users fetched: ${users.length}');
       _nearbyUsers = users;
       notifyListeners();
     } catch (e) {
@@ -120,11 +122,14 @@ class AppState extends ChangeNotifier {
   Future<void> _updateLocationOnServer() async {
     final location = await _locationService.getCurrentLocation();
     if (location != null) {
+      print('Updating location on server: (${location.latitude}, ${location.longitude})');
       await _apiService.updateLocation(
           _token,
           location.latitude!,
           location.longitude!
       );
+    } else {
+      print('Location is null, not updating server');
     }
   }
 

@@ -6,6 +6,9 @@ plugins {
 }
 
 android {
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
     namespace = "com.example.test1"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "27.0.12077973"

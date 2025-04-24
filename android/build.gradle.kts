@@ -1,3 +1,13 @@
+buildscript {
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.1.1") // 👈 yeh important hai
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
 allprojects {
     repositories {
         google()
@@ -9,18 +19,7 @@ val newBuildDir: Directory = rootProject.layout.buildDirectory.dir("../../build"
 rootProject.layout.buildDirectory.value(newBuildDir)
 
 
-//subprojects {
-//    afterEvaluate { project ->
-//        if (project.hasProperty('android')) {
-//            project.android {
-//                if (!hasProperty('namespace') || namespace == null || namespace.isEmpty()) {
-//                    // Assign a default namespace based on the project name or group
-//                    namespace = project.group.toString() ?: "com.example.${project.name}"
-//                }
-//            }
-//        }
-//    }
-//}
+
 
 
 subprojects {

@@ -9,7 +9,7 @@ class ApiService {
   Future<List<NearbyUser>> getNearbyUsers(String token) async {
     final response = await http.get(
       Uri.parse('${ApiConstants.baseUrl}/api/nearby'),
-      headers: {'Authorization': token},
+      headers: {'Authorization': 'Bearer $token'},
     );
 
     if (response.statusCode == 200) {
@@ -25,7 +25,7 @@ class ApiService {
   Future<List<ConnectionRequest>> getPendingRequests(String token) async {
     final response = await http.get(
       Uri.parse('${ApiConstants.baseUrl}/api/requests'),
-      headers: {'Authorization': token},
+      headers: {'Authorization': 'Bearer $token'},
     );
 
     if (response.statusCode == 200) {
@@ -63,8 +63,9 @@ class ApiService {
       Uri.parse('${ApiConstants.baseUrl}/auth/register'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
-        'username': username,
-        'password': password,
+
+            'username': username,
+            'password': password,
       }),
     );
 
@@ -74,8 +75,10 @@ class ApiService {
         token: data['token'],
         userId: data['userId'],
       );
+    } else{
+      print('registration failed: ${response.body}');
+      return null;
     }
-    return null;
   }
 
   Future<void> updateLocation(String token, double latitude, double longitude) async {
@@ -83,7 +86,7 @@ class ApiService {
       Uri.parse('${ApiConstants.baseUrl}/api/location'),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': token,
+        'Authorization': 'Bearer $token',
       },
       body: jsonEncode({
         'latitude': latitude,
@@ -97,7 +100,7 @@ class ApiService {
       Uri.parse('${ApiConstants.baseUrl}/api/request'),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': token,
+        'Authorization': 'Bearer $token',
       },
       body: jsonEncode({
         'receiver_id': receiverId,
@@ -110,7 +113,7 @@ class ApiService {
       Uri.parse('${ApiConstants.baseUrl}/api/request/$requestId'),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': token,
+        'Authorization': 'Bearer $token',
       },
       body: jsonEncode({
         'accept': accept,
